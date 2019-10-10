@@ -115,3 +115,88 @@ nyc_water =
     ##   nyc_consumption_million_gallons_per_day = col_double(),
     ##   per_capita_gallons_per_person_per_day = col_double()
     ## )
+
+``` r
+nyc_water = 
+  GET("https://data.cityofnewyork.us/resource/waf7-5gvc.json") %>% 
+  content("text") %>%
+  jsonlite::fromJSON() %>%
+  as_tibble()
+```
+
+“GET” tells R to go to the website and get everything on the website.
+The JSON format is messier than the .csv format. In this case, it boils
+down to something having to do with the data rectangle. JSON is a more
+flexible way to export data, but it requires additional parsing to get
+where you want to be when you download JSON data.
+
+``` r
+brfss_smart2010 = 
+  GET("https://data.cdc.gov/api/views/acme-vg9e/rows.csv?accessType=DOWNLOAD") %>% 
+  content("parsed")
+```
+
+    ## Parsed with column specification:
+    ## cols(
+    ##   .default = col_character(),
+    ##   Year = col_double(),
+    ##   Sample_Size = col_double(),
+    ##   Data_value = col_double(),
+    ##   Confidence_limit_Low = col_double(),
+    ##   Confidence_limit_High = col_double(),
+    ##   Display_order = col_double(),
+    ##   LocationID = col_logical()
+    ## )
+
+    ## See spec(...) for full column specifications.
+
+``` r
+poke = 
+  GET("http://pokeapi.co/api/v2/pokemon/1") %>%
+  content()
+
+poke$name
+```
+
+    ## [1] "bulbasaur"
+
+``` r
+poke$height
+```
+
+    ## [1] 7
+
+``` r
+poke$abilities
+```
+
+    ## [[1]]
+    ## [[1]]$ability
+    ## [[1]]$ability$name
+    ## [1] "chlorophyll"
+    ## 
+    ## [[1]]$ability$url
+    ## [1] "https://pokeapi.co/api/v2/ability/34/"
+    ## 
+    ## 
+    ## [[1]]$is_hidden
+    ## [1] TRUE
+    ## 
+    ## [[1]]$slot
+    ## [1] 3
+    ## 
+    ## 
+    ## [[2]]
+    ## [[2]]$ability
+    ## [[2]]$ability$name
+    ## [1] "overgrow"
+    ## 
+    ## [[2]]$ability$url
+    ## [1] "https://pokeapi.co/api/v2/ability/65/"
+    ## 
+    ## 
+    ## [[2]]$is_hidden
+    ## [1] FALSE
+    ## 
+    ## [[2]]$slot
+    ## [1] 1

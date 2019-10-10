@@ -93,9 +93,37 @@ reviews = tibble(
 Note that the particular URL only pulls the reviews from page 1. You can go through and change the page # in the URL, but this could take forever. Prof will show us a way to automate this process later on in the course.
 
 ## Using an API
-```{r}
+```{r NYCWater}
 nyc_water = 
   GET("https://data.cityofnewyork.us/resource/waf7-5gvc.csv") %>% 
   content("parsed")
+
+nyc_water = 
+  GET("https://data.cityofnewyork.us/resource/waf7-5gvc.json") %>% 
+  content("text") %>%
+  jsonlite::fromJSON() %>%
+  as_tibble()
+```
+"GET" tells R to go to the website and get everything on the website.
+The JSON format is messier than the .csv format. In this case, it boils down to something having to do with the data rectangle. JSON is a more flexible way to export data, but it requires additional parsing to get where you want to be when you download JSON data.
+
+
+```{r BRFSS}
+brfss_smart2010 = 
+  GET("https://data.cdc.gov/api/views/acme-vg9e/rows.csv?accessType=DOWNLOAD") %>% 
+  content("parsed")
+```
+
+
+```{r Pokemon}
+poke = 
+  GET("http://pokeapi.co/api/v2/pokemon/1") %>%
+  content()
+
+poke$name
+
+poke$height
+
+poke$abilities
 ```
 
